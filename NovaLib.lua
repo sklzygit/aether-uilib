@@ -1218,7 +1218,6 @@ function TabMeta:CreateSection(name)
         TextSize = 10,
         Font = Theme.FontBold,
         TextXAlignment = Enum.TextXAlignment.Left,
-        LetterSpacing = 2,
     }, HeaderRow)
 
     -- Content list
