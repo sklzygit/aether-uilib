@@ -8,11 +8,12 @@
   ─────────────────────────────────────────────────────────────────
   local Nova = loadstring(game:HttpGet(RAW_URL))()
 
-  local Win = Nova:CreateWindow({
-      Title    = "My Script",
-      SubTitle = "v1.0.0",
-      Key      = Enum.KeyCode.RightShift,   -- toggle key (optional)
-  })
+    local Window = Nova:CreateWindow({
+        Title    = "Aether",
+        SubTitle = "v2.0.0 — Obsidian",
+        Size     = UDim2.new(0, 580, 0, 440),
+        Key      = Enum.KeyCode.RightShift,  -- toggle visibility
+    })
 
   local Tab     = Win:CreateTab("Combat", "sword")
   local Section = Tab:CreateSection("Aimbot")
@@ -1587,24 +1588,26 @@ local function BuildWindow(config)
     local tabs      = {}
     local activeTab = nil
 
-    local function switchTab(tabObj)
-        if activeTab == tabObj then return end
-        if activeTab then
-            U.Fast(activeTab._iBtn, { BackgroundTransparency = 1 })
-            U.Fast(activeTab._iLbl, { TextColor3 = T.TxtMuted })
-            U.Fast(activeTab._nBtn, { BackgroundTransparency = 1 })
-            U.Fast(activeTab._nLbl, { TextColor3 = T.TxtMuted, Font = T.Reg })
-            activeTab._bar.BackgroundTransparency = 1
-            activeTab._page.Visible = false
+        local function switchTab(tabObj)
+            if activeTab == tabObj then return end
+            if activeTab then
+                U.Fast(activeTab._iBtn, { BackgroundTransparency = 1 })
+                U.Fast(activeTab._iLbl, { TextColor3 = T.TxtMuted })
+                U.Fast(activeTab._nBtn, { BackgroundTransparency = 1 })
+                U.Fast(activeTab._nLbl, { TextColor3 = T.TxtMuted })
+                activeTab._nLbl.Font = T.Reg        -- set directly
+                activeTab._bar.BackgroundTransparency = 1
+                activeTab._page.Visible = false
+            end
+            activeTab = tabObj
+            U.Fast(tabObj._iBtn, { BackgroundColor3 = T.AccentBg, BackgroundTransparency = 0 })
+            U.Fast(tabObj._iLbl, { TextColor3 = T.Accent })
+            U.Fast(tabObj._nBtn, { BackgroundColor3 = T.AccentBg, BackgroundTransparency = 0 })
+            U.Fast(tabObj._nLbl, { TextColor3 = T.TxtAccent })
+            tabObj._nLbl.Font = T.Bold              -- set directly
+            tabObj._bar.BackgroundTransparency = 0
+            tabObj._page.Visible = true
         end
-        activeTab = tabObj
-        U.Fast(tabObj._iBtn, { BackgroundColor3 = T.AccentBg, BackgroundTransparency = 0 })
-        U.Fast(tabObj._iLbl, { TextColor3 = T.Accent })
-        U.Fast(tabObj._nBtn, { BackgroundColor3 = T.AccentBg, BackgroundTransparency = 0 })
-        U.Fast(tabObj._nLbl, { TextColor3 = T.TxtAccent, Font = T.Bold })
-        tabObj._bar.BackgroundTransparency = 0
-        tabObj._page.Visible = true
-    end
 
     -- ── WINDOW API ───────────────────────────────────────────────────
     local winAPI = {}

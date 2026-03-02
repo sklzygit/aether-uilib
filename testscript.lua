@@ -9,8 +9,9 @@ local Nova = loadstring(game:HttpGet(
 -- ── CREATE WINDOW ────────────────────────
 local Window = Nova:CreateWindow({
     Title    = "Aether",
-    SubTitle = "v1.0.0 — Test Suite",
+    SubTitle = "v2.0.0 — Obsidian",
     Size     = UDim2.new(0, 580, 0, 440),
+    Key      = Enum.KeyCode.RightShift,  -- toggle visibility
 })
 
 -- ══════════════════════════════════════════
