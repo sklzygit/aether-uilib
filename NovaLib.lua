@@ -345,12 +345,11 @@ local function fireNotif(opts)
     Prog.BorderSizePixel = 0
     U.Corner(Prog, T.RPill)
 
-    Card.Position = UDim2.new(1.1, 0, 0, 0)
-    U.Med(Card, { BackgroundTransparency = 0, Position = UDim2.new(0,0,0,0) })
+    U.Med(Card, { BackgroundTransparency = 0 })
     U.Tween(Prog, TweenInfo.new(dur, Enum.EasingStyle.Linear), { Size = UDim2.new(0,0,1,0) })
 
     task.delay(dur, function()
-        U.Fast(Card, { BackgroundTransparency = 1, Position = UDim2.new(1.1,0,0,0) })
+        U.Fast(Card, { BackgroundTransparency = 1 })
         task.wait(0.22)
         if Card and Card.Parent then Card:Destroy() end
     end)
@@ -738,8 +737,9 @@ function Comp.Slider(parent, opts)
 
     local function setVis(v)
         local pct = (v - mn) / (mx - mn)
+        local hw  = drag and 9 or 7
         Fill.Size = UDim2.new(pct, 0, 1, 0)
-        Thumb.Position = UDim2.new(pct, -7, 0.5, -7)
+        Thumb.Position = UDim2.new(pct, -hw, 0.5, -hw)
         ThumbGlow.Position = UDim2.new(pct, -10, 0.5, -10)
         ValLbl.Text = fmt(v)
     end
@@ -766,9 +766,9 @@ function Comp.Slider(parent, opts)
 
     Hit.MouseButton1Down:Connect(function(x)
         drag = true
-        U.Fast(Thumb, { Size = UDim2.new(0,18,0,18), Position = UDim2.new((val-mn)/(mx-mn),-9,0.5,-9) })
+        U.Fast(Thumb,     { Size = UDim2.new(0,18,0,18) })
         U.Fast(ThumbGlow, { BackgroundTransparency = 0.75 })
-        U.Fast(tStroke, { Transparency = 0 })
+        U.Fast(tStroke,   { Transparency = 0 })
         fromX(x)
     end)
 
@@ -1039,8 +1039,7 @@ function Comp.Dropdown(parent, opts)
 
                 if opts.Callback then task.spawn(opts.Callback, val) end
                 if not multi then
-                    open = true
-                    Hdr.MouseButton1Click:Fire()
+                    toggle()
                 end
             end)
         end
@@ -1734,9 +1733,12 @@ local function BuildWindow(config)
 
     -- Entrance animation
     Win.BackgroundTransparency = 1
-    Win.Position = UDim2.new(sp.X.Scale, sp.X.Offset, sp.Y.Scale, sp.Y.Offset + 20)
+    Shadow.BackgroundTransparency = 1
+    Win.Position    = UDim2.new(sp.X.Scale, sp.X.Offset,      sp.Y.Scale, sp.Y.Offset + 20)
+    Shadow.Position = UDim2.new(sp.X.Scale, sp.X.Offset - 28, sp.Y.Scale, sp.Y.Offset - 28 + 20)
     task.defer(function()
-        U.Med(Win, { BackgroundTransparency = 0, Position = sp })
+        U.Med(Win,    { BackgroundTransparency = 0,    Position = sp })
+        U.Med(Shadow, { BackgroundTransparency = 0.42, Position = UDim2.new(sp.X.Scale, sp.X.Offset - 28, sp.Y.Scale, sp.Y.Offset - 28) })
     end)
 
     return winAPI
